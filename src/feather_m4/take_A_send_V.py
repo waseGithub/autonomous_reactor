@@ -66,17 +66,15 @@ while True:
 
         try:
             df_live = pd.read_csv('data.csv')
-            try:
-                trend_calculator = TrendGradientCalculator(df_live)
-            
-            except NameError:
-                pass
     
         except FileNotFoundError:
             pass
 
-        
-         
+        try:
+            trend_calculator = TrendGradientCalculator(df_live)
+            
+        except NameError:
+            pass
 
         try:
             gradient = trend_calculator.calculate_gradient()
