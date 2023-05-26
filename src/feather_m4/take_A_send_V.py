@@ -24,7 +24,8 @@ board_baud_rate = 115200
 ser = serial.Serial(port, board_baud_rate)
 
 # CSV file path
-csv_file = 'data.csv'
+csv_file = 'adalogger_data.csv'
+csv_file2 = 'gradient_data.csv'
 
 # Read data from Arduino
 data_dict = {}
