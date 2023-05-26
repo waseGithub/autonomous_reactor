@@ -101,9 +101,9 @@ while True:
                 df = df.rename_axis('datetime') 
 
                 if not os.path.isfile(csv_file2) or os.stat(csv_file2).st_size == 0:
-                    df.to_csv(csv_file, mode='w', header=True)
+                    df.to_csv(csv_file2, mode='w', header=True)
                 else:
-                    df.to_csv(csv_file, mode='a', header=False)
+                    df.to_csv(csv_file2, mode='a', header=False)
         
 
                 print("Gradient of A Current over the last minute:", gradient)
