@@ -24,7 +24,7 @@ class TrendGradientCalculator:
         time_diff = (self.dataframe.index[-1] - self.dataframe.index[0]).total_seconds()
         
         # Filter the DataFrame for the last minute of data
-        start_time = self.dataframe.index[-1] - dt.timedelta(minutes=1)
+        start_time = self.dataframe.index[-1] - dt.timedelta(minutes=3)
         last_minute_df = self.dataframe[start_time:]
         
         # Calculate the gradient using NumPy's polyfit function
