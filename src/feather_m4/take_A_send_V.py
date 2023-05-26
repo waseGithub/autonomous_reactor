@@ -28,6 +28,7 @@ csv_file = 'data.csv'
 
 # Read data from Arduino
 data_dict = {}
+gradient_dict = {}
 time_checker1 = time_check()
 time_checker2 = time_check()
 
@@ -91,6 +92,19 @@ while True:
      
             try:
                 gradient = trend_calculator.calculate_gradient()
+                gradient_dict['datetime'] = str(datetime.now())
+                gradient_dict['gradient_caluclated'] = gradient
+
+                df = pd.DataFrame(gradient_dict, index=[gradient_dict['datetime']])
+                df = df.drop('datetime', axis=1)
+                df = df.rename_axis('datetime') 
+
+                if not os.path.isfile(csv_file) or os.stat(csv_file).st_size == 0:
+                    df.to_csv(csv_file, mode='w', header=True)
+                else:
+                    df.to_csv(csv_file, mode='a', header=False)
+        
+
                 print("Gradient of A Current over the last minute:", gradient)
             except ValueError:
                 pass
