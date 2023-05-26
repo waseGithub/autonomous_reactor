@@ -1,6 +1,10 @@
 import pandas as pd
 import datetime as dt
 import numpy as np
+import time
+
+
+
 
 class TrendGradientCalculator:
     def __init__(self, dataframe):
@@ -29,3 +33,16 @@ class TrendGradientCalculator:
         gradient = np.polyfit(x, y, 1)[0]
         
         return gradient
+    
+
+class time_check:
+    def __init__(self):
+        self.last_event_time = time.time()
+        
+    def has_passed_minutes(self, minutes):
+        current_time = time.time()
+        elapsed_time = (current_time - self.last_event_time) / 60  # convert to minutes
+        return elapsed_time >= minutes
+
+    def reset(self):
+        self.last_event_time = time.time()

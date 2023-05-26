@@ -26,6 +26,9 @@ csv_file = 'data.csv'
 
 # Read data from Arduino
 data_dict = {}
+time_checker1 = time_check()
+time_checker2 = time_check()
+
 while True:
     if ser.in_waiting > 0:
         line = ser.readline().decode('utf-8').rstrip()
@@ -48,6 +51,9 @@ while True:
 
         # print(data_dict)
 
+
+
+
   
         if len(data_dict) == 7:
 
@@ -64,23 +70,27 @@ while True:
                 df.to_csv(csv_file, mode='a', header=False)
         
 
-        try:
-            df_live = pd.read_csv('data.csv')
-    
-        except FileNotFoundError:
-            pass
 
-        try:
-            trend_calculator = TrendGradientCalculator(df_live)
-            
-        except NameError:
-            pass
+        gradient_time_check = 3
+        if time_checker2.has_passed_minutes(gradient_time_check):
 
-        try:
-            gradient = trend_calculator.calculate_gradient()
-            print("Gradient of A Current over the last minute:", gradient)
-        except ValueError:
-            pass
+            try:
+                df_live = pd.read_csv('data.csv')
+        
+            except FileNotFoundError:
+                pass
+
+            try:
+                trend_calculator = TrendGradientCalculator(df_live)
+                
+            except NameError:
+                pass
+
+            try:
+                gradient = trend_calculator.calculate_gradient()
+                print("Gradient of A Current over the last minute:", gradient)
+            except ValueError:
+                pass
 
 
 
