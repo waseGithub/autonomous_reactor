@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import datetime
 import os 
 from reactor_controll import TrendGradientCalculator
+from reactor_controll import time_check
 
 board_serial_number = 'D81E4C5053374E4D4C202020FF0F1631'  
 port = None
