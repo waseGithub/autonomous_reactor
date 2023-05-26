@@ -55,7 +55,7 @@ while True:
 
     
 
-        data_log_time_check = 1
+        data_log_time_check = 0.1
         if time_checker1.has_passed_minutes(data_log_time_check):
             time_checker1.reset()
             print(data_dict)
