@@ -80,7 +80,7 @@ while True:
 
             try:
                 df_live = pd.read_csv('data.csv')
-                print(df_live)
+                print(df_live.tail(10))
                 trend_calculator = TrendGradientCalculator(df_live)
         
             except FileNotFoundError:
