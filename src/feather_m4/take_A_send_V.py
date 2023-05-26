@@ -56,6 +56,7 @@ while True:
 
         data_log_time_check = 1
         if time_checker2.has_passed_minutes(data_log_time_check):
+            print(data_dict)
   
             if len(data_dict) == 7:
 
