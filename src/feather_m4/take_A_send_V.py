@@ -97,7 +97,7 @@ while True:
                 print("Gradient of A Current over the last minute:", gradient)
             except ValueError:
                 pass
-            except numpy.linalg.LinAlgError:
+            except np.linalg.LinAlgError:
                 pass
 
 
