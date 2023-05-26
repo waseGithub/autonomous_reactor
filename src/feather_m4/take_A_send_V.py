@@ -100,7 +100,7 @@ while True:
                 df = df.drop('datetime', axis=1)
                 df = df.rename_axis('datetime') 
 
-                if not os.path.isfile(csv_file) or os.stat(csv_file).st_size == 0:
+                if not os.path.isfile(csv_file2) or os.stat(csv_file2).st_size == 0:
                     df.to_csv(csv_file, mode='w', header=True)
                 else:
                     df.to_csv(csv_file, mode='a', header=False)
