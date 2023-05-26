@@ -60,15 +60,13 @@ while True:
             time_checker1.reset()
             print(data_dict)
   
-            if len(data_dict) == 7:
+            if len(data_dict) == 5:
 
                 df = pd.DataFrame(data_dict, index=[data_dict['datetime']])
                 df = df.drop('datetime', axis=1)
                 df = df.rename_axis('datetime') 
                 
                 
-
-                # Append DataFrame to CSV if the file is empty
                 if not os.path.isfile(csv_file) or os.stat(csv_file).st_size == 0:
                     df.to_csv(csv_file, mode='w', header=True)
                 else:
@@ -76,7 +74,7 @@ while True:
         
 
 
-        gradient_time_check = 3
+        gradient_time_check = 1
         if time_checker2.has_passed_minutes(gradient_time_check):
             time_checker2.reset()
 
