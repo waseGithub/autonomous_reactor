@@ -4,6 +4,7 @@ from datetime import datetime
 import os 
 from reactor_controll import TrendGradientCalculator
 from reactor_controll import time_check
+import numpy as np
 
 board_serial_number = 'D81E4C5053374E4D4C202020FF0F1631'  
 port = None
@@ -95,6 +96,8 @@ while True:
                 gradient = trend_calculator.calculate_gradient()
                 print("Gradient of A Current over the last minute:", gradient)
             except ValueError:
+                pass
+            except numpy.linalg.LinAlgError:
                 pass
 
 
