@@ -81,7 +81,7 @@ while True:
             time_checker2.reset()
 
             try:
-                df_live = pd.read_csv('data.csv')
+                df_live = pd.read_csv('adalogger_data.csv')
                 print(df_live.tail(10))
                 trend_calculator = TrendGradientCalculator(df_live)
         
