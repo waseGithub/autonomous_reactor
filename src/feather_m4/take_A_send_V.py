@@ -76,7 +76,7 @@ while True:
         
 
 
-        gradient_time_check = 1
+        gradient_time_check = 60
         if time_checker2.has_passed_minutes(gradient_time_check):
             time_checker2.reset()
 
