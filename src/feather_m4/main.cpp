@@ -79,12 +79,12 @@ void loop(void)
     power_mW_B = ina219_B.getPower_mW();
     loadvoltage_B = busvoltage_B + (shuntvoltage_B / 1000);
 
-    Serial.print("B Bus Voltage:   ");
-    Serial.print(busvoltage_B);
-    Serial.println(" V");
-    Serial.print("B Current:       ");
-    Serial.print(current_mA_B);
-    Serial.println(" mA");
+    // Serial.print("B Bus Voltage:   ");
+    // Serial.print(busvoltage_B);
+    // Serial.println(" V");
+    // Serial.print("B Current:       ");
+    // Serial.print(current_mA_B);
+    // Serial.println(" mA");
 
   }
 
