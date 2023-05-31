@@ -2,7 +2,7 @@ import serial.tools.list_ports
 import pandas as pd
 from datetime import datetime
 import os 
-from reactor_controll import TrendGradientCalculator
+# from reactor_controll import TrendGradientCalculator
 from reactor_controll import time_check
 import numpy as np
 
@@ -76,41 +76,41 @@ while True:
         
 
 
-        gradient_time_check = 10
-        if time_checker2.has_passed_minutes(gradient_time_check):
-            time_checker2.reset()
+        # gradient_time_check = 10
+        # if time_checker2.has_passed_minutes(gradient_time_check):
+        #     time_checker2.reset()
 
-            try:
-                df_live = pd.read_csv('adalogger_data.csv')
-                print(df_live.tail(10))
-                trend_calculator = TrendGradientCalculator(df_live)
+        #     try:
+        #         df_live = pd.read_csv('adalogger_data.csv')
+        #         print(df_live.tail(10))
+        #         trend_calculator = TrendGradientCalculator(df_live)
         
-            except FileNotFoundError:
-                pass
+        #     except FileNotFoundError:
+        #         pass
 
          
                 
      
-            try:
-                gradient = trend_calculator.calculate_gradient()
-                gradient_dict['datetime'] = str(datetime.now())
-                gradient_dict['gradient_caluclated'] = gradient
+            # try:
+            #     gradient = trend_calculator.calculate_gradient()
+            #     gradient_dict['datetime'] = str(datetime.now())
+            #     gradient_dict['gradient_caluclated'] = gradient
 
-                df = pd.DataFrame(gradient_dict, index=[gradient_dict['datetime']])
-                df = df.drop('datetime', axis=1)
-                df = df.rename_axis('datetime') 
+            #     df = pd.DataFrame(gradient_dict, index=[gradient_dict['datetime']])
+            #     df = df.drop('datetime', axis=1)
+            #     df = df.rename_axis('datetime') 
 
-                if not os.path.isfile(csv_file2) or os.stat(csv_file2).st_size == 0:
-                    df.to_csv(csv_file2, mode='w', header=True)
-                else:
-                    df.to_csv(csv_file2, mode='a', header=False)
+            #     if not os.path.isfile(csv_file2) or os.stat(csv_file2).st_size == 0:
+            #         df.to_csv(csv_file2, mode='w', header=True)
+            #     else:
+            #         df.to_csv(csv_file2, mode='a', header=False)
         
 
-                print("Gradient of A Current over the last minute:", gradient)
-            except ValueError:
-                pass
-            except np.linalg.LinAlgError:
-                pass
+            #     print("Gradient of A Current over the last minute:", gradient)
+            # except ValueError:
+            #     pass
+            # except np.linalg.LinAlgError:
+            #     pass
 
 
 
