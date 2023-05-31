@@ -51,6 +51,8 @@ data.set_index(['datetime'], inplace=True)
 data.reset_index(inplace=True)
 data['datetime'] = data['datetime'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
+print(data)
+
 
 
 cnx = mysql.connector.connect(user='root', password='wase2022', host='34.89.81.147', database='autonomous_reactor')
