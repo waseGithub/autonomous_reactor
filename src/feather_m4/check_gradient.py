@@ -23,7 +23,7 @@ query = "SELECT * FROM  adalogger"
 
 
 adalogger_df = pd.read_sql(query, cnx)
-print(adalogger_df)
+
 
 cnx.close()
 
@@ -56,13 +56,16 @@ adalogger_df['datetime'] = pd.to_datetime(adalogger_df['datetime'])
 adalogger_df.set_index('datetime', inplace=True)
 
 # Resample the dataframe to get continuous data for every half hour
-df_resampled =adalogger_df.resample('60min').mean()
+df_resampled =adalogger_df.resample('90min').mean()
 
 # Reset 'time' column for resampled data
 df_resampled['time'] = (df_resampled.index - df_resampled.index[0]).total_seconds()
 
 # Calculate the gradient
 df_resampled['gradient'] = np.gradient(df_resampled['A Current'], df_resampled['time'])
+
+gradient_df = df_resampled['gradient']
+
 
 # Plot the result
 plt.figure(figsize=(10,6))
@@ -73,8 +76,6 @@ plt.title('Gradient of Model')
 plt.grid(True)
 plt.show()
 
-
-gradient_df = df_resampled['gradient']
 
 gradient_df.to_csv('gradient_data.csv')
 
