@@ -91,7 +91,7 @@ void loop(void)
   
 
 
-// added today 
+
   if (Serial.available() > 0) {
     String receivedData = Serial.readString();
     Serial.print("Set Voltage:  ");
@@ -99,7 +99,7 @@ void loop(void)
     set_voltage = receivedData.toFloat();
 
   }
-  //  added today
+  //  inseet control aglorithmn here
 
 
   Serial.print("Set Voltage:  ");
