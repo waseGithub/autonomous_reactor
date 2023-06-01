@@ -142,21 +142,22 @@ while True:
     with open('gradient_data.json', 'w') as file:
         json.dump(gradient_data, file)
 
-      # Plot the result
+    # Plot the result
     plt.figure(figsize=(10, 6))
     plt.plot(df_resampled.index, df_resampled['gradient'])
     plt.xlabel('Date and Time')
     plt.ylabel('Gradient')
     plt.title('Gradient of Model')
     plt.grid(True)
-    plt.pause(0.1)  # Pause for a small delay
+    plt.show(block=False)  # Show the plot window without blocking
 
-    # Clear the current plot
-    plt.clf()
-    time_wait = 60
-    print('waiting', time_wait)
+    # Wait for a delay
+    time.sleep(5)
+
+    # Close the plot window
+    plt.close()
 
     # Wait for one minute before reloading the data and image
-    time.sleep(time_wait)
+    time.sleep(55)
 
 
