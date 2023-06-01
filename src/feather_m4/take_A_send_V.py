@@ -5,6 +5,9 @@ import os
 # from reactor_controll import TrendGradientCalculator
 from reactor_controll import time_check
 import numpy as np
+import json
+import math
+
 
 board_serial_number = 'D81E4C5053374E4D4C202020FF0F1631'  
 port = None
@@ -55,8 +58,25 @@ while True:
 
         # print(data_dict)
 
-       
-        response_voltage = "0.2"  # Replace with your desired response
+        with open('gradient_data.json', 'r') as file:
+            data = json.load(file)
+
+        # Extract the data value
+        latest_gradient = data['latest_gradient']
+
+        # Print the extracted data value
+        print("Latest Gradient:", latest_gradient)
+
+        sign = int(math.copysign(1, latest_gradient))
+
+        sign_text = {
+                        1: "0.3",
+                        -1: "0.1",
+                        0: "0"
+                    }
+
+
+        response_voltage = str(sign_text[sign]) 
         ser.write(response_voltage.encode())
 
     
