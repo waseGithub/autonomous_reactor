@@ -95,7 +95,7 @@ void loop(void)
   if (Serial.available() > 0) {
     String receivedData = Serial.readString();
     Serial.print("Set Voltage:  ");
-    Serial.println(recievedData)
+    Serial.println(receivedData)
     set_voltage = receivedData.toFloat();
 
   }
