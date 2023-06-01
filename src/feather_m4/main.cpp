@@ -87,7 +87,16 @@ void loop(void)
     // Serial.println(" mA");
 
   }
+  
 
+
+// added today 
+  if (Serial.available() > 0) {
+    String receivedData = Serial.readString();
+    // Process the received response here
+    // ...
+  }
+  //  added today
 
   float set_voltage;
   set_voltage = 0.5;
@@ -98,6 +107,8 @@ void loop(void)
   Serial.print("digital intput:  ");
   Serial.println(digital_v_input); 
   Serial.println("");
+
+
 
 
   mcp.setChannelValue(MCP4728_CHANNEL_D, digital_v_input);
