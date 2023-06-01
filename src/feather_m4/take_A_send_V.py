@@ -64,8 +64,6 @@ while True:
         # Extract the data value
         latest_gradient = data['latest_gradient']
 
-        # Print the extracted data value
-        print("Latest Gradient:", latest_gradient)
 
         sign = int(math.copysign(1, latest_gradient))
 
@@ -85,6 +83,7 @@ while True:
         if time_checker1.has_passed_minutes(data_log_time_check):
             time_checker1.reset()
             print(data_dict)
+            print("Latest Gradient:", latest_gradient)
   
             if len(data_dict) == 5:
 
