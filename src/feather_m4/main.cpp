@@ -13,6 +13,7 @@ Adafruit_INA219 ina219_D(0x45);
 
 const int chipSelect = 10;
 int currenthour;
+float set_voltage;
 
 void setup(void)
 {
@@ -95,12 +96,12 @@ void loop(void)
     String receivedData = Serial.readString();
     Serial.print("Set Voltage:  ");
     Serial.println(recievedData)
-    float set_voltage = receivedData.toFloat();
+    set_voltage = receivedData.toFloat();
 
   }
   //  added today
 
-  float set_voltage;
+
   Serial.print("Set Voltage:  ");
   Serial.println(set_voltage);
   float digital_v_input;
