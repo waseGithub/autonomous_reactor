@@ -56,7 +56,7 @@ while True:
         # print(data_dict)
 
        
-        response_voltage = "0.5"  # Replace with your desired response
+        response_voltage = "0.2"  # Replace with your desired response
         ser.write(response_voltage.encode())
 
     
