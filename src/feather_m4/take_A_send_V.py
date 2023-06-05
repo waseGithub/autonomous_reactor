@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 import os 
 # from reactor_controll import TrendGradientCalculator
-from reactor_controll import time_check
+from reactor_controll import TimeCheck
 from reactor_controll import set_pump
 import numpy as np
 import json
