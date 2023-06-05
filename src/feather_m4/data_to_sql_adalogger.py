@@ -61,6 +61,10 @@ def resample_max(df, time, cols, round_val):
 df_auto_control['datetime'] = pd.to_datetime(df_auto_control['datetime'], errors='coerce')
 df_auto_control.set_index(['datetime'], inplace=True)
 
+df_auto_control = df_auto_control.applymap(lambda x: pd.to_numeric(x, errors='coerce')).dropna()
+
+
+
 df_auto_control['A Bus Voltage'] = df_auto_control['A Bus Voltage'].str.replace(' V', '').astype(float)
 df_auto_control['A Current'] = df_auto_control['A Current'].str.replace(' mA', '').astype(float)
 
