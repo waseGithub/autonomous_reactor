@@ -4,6 +4,7 @@ from datetime import datetime
 import os 
 # from reactor_controll import TrendGradientCalculator
 from reactor_controll import time_check
+from reactor_controll import set_pump
 import numpy as np
 import json
 import math
@@ -35,7 +36,7 @@ data_dict = {}
 gradient_dict = {}
 time_checker1 = time_check()
 time_checker2 = time_check()
-
+latest_gradient = 0 
 while True:
     if ser.in_waiting > 0:
         line = ser.readline().decode('utf-8').rstrip()
@@ -57,31 +58,31 @@ while True:
             
 
         # print(data_dict)
+        
 
-        with open('gradient_data.json', 'r') as file:
-            data = json.load(file)
-
-        # Extract the data value
-        latest_gradient = data['latest_gradient']
+        
 
 
-        sign = int(math.copysign(1, latest_gradient))
-
-        sign_text = {
-                        1: "0.3",
-                        -1: "0.1",
-                        0: "0"
-                    }
+        
+       
 
 
-        response_voltage = str(sign_text[sign]) 
-        ser.write(response_voltage.encode())
+
+        
 
     
 
         data_log_time_check = 0.1
         if time_checker1.has_passed_minutes(data_log_time_check):
             time_checker1.reset()
+
+
+            try:
+                with open('gradient_data.json', 'r') as file:
+                    data = json.load(file)
+                    latest_gradient = data['latest_gradient']
+            except json.decoder.JSONDecodeError:
+                pass
             print(data_dict)
             print("Latest Gradient:", latest_gradient)
   
@@ -96,6 +97,23 @@ while True:
                     df.to_csv(csv_file, mode='w', header=True)
                 else:
                     df.to_csv(csv_file, mode='a', header=False)
+
+            
+
+                # Extract the data value
+            
+
+            df = pd.read_csv('adalogger.csv')
+            
+            df['A Current'] = df['A Current'].str.replace(' mA', '').astype(float)
+            if len(df) >= 30:
+                current_now = df['A Current'].tail(30).mean()
+            else: 
+                current_now = 0
+
+            response_voltage = set_pump(current_now, latest_gradient)
+            # response_voltage = str(sign_text[sign]) 
+            ser.write(str(response_voltage).encode())
         
 
 
