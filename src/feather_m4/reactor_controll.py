@@ -81,7 +81,7 @@ class TimeCheck:
 
 class Control:
     def __init__(self):
-        self.feedrate = 0.001
+        self.feedrate = 0.002
 
     def SetPump(self, current_now: float, latest_gradient: float) -> float:
         """
@@ -110,9 +110,9 @@ class Control:
             if sign_text[sign] == 1 or sign_text[sign] == 0:
                 self.feedrate += feedrate_step
             else :
-                self.feedrate = 0.0015
+                self.feedrate = 0.002
         else :
-            self.feedrate = 0.0015
+            self.feedrate = 0.002
         
         return self.feedrate
 
