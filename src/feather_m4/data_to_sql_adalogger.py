@@ -31,7 +31,7 @@ df_auto_control = pd.DataFrame(data)
 
 def resample_mean(df, time, cols, round_val):
   df.dropna(inplace=True)
-  df =  df[(df.astype(float) >= 0.0).all(1)]
+  # df =  df[(df.astype(float) >= 0.0).all(1)]
   df = df.groupby([pd.Grouper(freq=time, level='datetime')])[cols].mean() 
   df = df.round(round_val)
   return df
@@ -110,4 +110,4 @@ for i,row in df_auto_control.iterrows():
 
 cnx.close()
 
-os.remove('/home/wase/autonomous_reactor/src/feather_m4/adalogger_data.csv')
+
