@@ -2,6 +2,7 @@ import pandas as pd
 import datetime as dt
 import numpy as np
 import time
+import math
 
 
 
@@ -39,14 +40,78 @@ import time
 
     
 
-class time_check:
+class TimeCheck:
+    """
+    A class used to track the time elapsed since a particular event.
+
+    Attributes:
+    last_event_time (float): The time of the last event, in seconds since the epoch.
+
+    Methods:
+    has_passed_minutes(minutes): Returns True if the specified number of minutes has elapsed since the last event.
+    reset(): Resets the last event time to the current time.
+    """
+    
     def __init__(self):
+        """
+        Initializes the TimeCheck with the current time as the last event time.
+        """
         self.last_event_time = time.time()
         
-    def has_passed_minutes(self, minutes):
+    def has_passed_minutes(self, minutes: float) -> bool:
+        """
+        Checks if the specified number of minutes has elapsed since the last event.
+
+        Parameters:
+        minutes (float): The number of minutes to check.
+
+        Returns:
+        bool: True if the specified number of minutes has elapsed since the last event, False otherwise.
+        """
         current_time = time.time()
         elapsed_time = (current_time - self.last_event_time) / 60  # convert to minutes
         return elapsed_time >= minutes
 
     def reset(self):
+        """
+        Resets the last event time to the current time.
+        """
         self.last_event_time = time.time()
+
+
+class Control:
+    def __init__(self):
+        self.feedrate = 0.0
+
+    def set_pump(self, current_now: float, latest_gradient: float) -> float:
+        """
+        This method calculates and sets the new feedrate based on the current and the latest gradient.
+        
+        Parameters:
+        current_now (float): The current value.
+        latest_gradient (float): The latest gradient value.
+
+        Returns:
+        float: The updated feedrate.
+        """
+        sign = int(math.copysign(1, latest_gradient))
+        sign_text = {
+                        1: 1,
+                        -1: -1,
+                        0: 0
+                    }
+        
+        feedrate_step = 0.005
+        current_min = 25.00
+
+        if current_now > current_min: 
+            if sign_text[sign] == 1 or sign_text[sign] == 0:
+                self.feedrate += feedrate_step
+            else :
+                self.feedrate = 0
+        else :
+            self.feedrate = 0
+        
+        return self.feedrate
+
+    
