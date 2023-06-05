@@ -70,7 +70,7 @@ df_auto_control['A Bus Voltage'] = pd.to_numeric(df_auto_control['A Bus Voltage'
 df_auto_control['A Current'] = pd.to_numeric(df_auto_control['A Current'], errors='coerce')
 df_auto_control = df_auto_control.dropna(subset=['A Bus Voltage', 'A Current'])
 
-print(df_auto_control)
+
 
 
 
@@ -78,7 +78,7 @@ df_auto_control = resample_mean(df_auto_control, '30T', ['A Bus Voltage','A Curr
 
 
 
-print(df_auto_control)
+
 
 df_auto_control.reset_index(inplace=True)
 df_auto_control['datetime'] = df_auto_control['datetime'].dt.strftime('%Y-%m-%d %H:%M:%S')
@@ -86,7 +86,6 @@ df_auto_control['datetime'] = df_auto_control['datetime'].dt.strftime('%Y-%m-%d 
 
 df_auto_control.to_csv('test.csv')
 
-print(df_auto_control)
 
 
 
