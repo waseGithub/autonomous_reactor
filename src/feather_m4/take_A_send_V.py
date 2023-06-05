@@ -4,7 +4,7 @@ from datetime import datetime
 import os 
 # from reactor_controll import TrendGradientCalculator
 from reactor_controll import TimeCheck
-from reactor_controll import set_pump
+from reactor_controll import SetPump
 import numpy as np
 import json
 import math
@@ -111,7 +111,7 @@ while True:
             else: 
                 current_now = 0
 
-            response_voltage = set_pump(current_now, latest_gradient)
+            response_voltage = SetPump(current_now, latest_gradient)
             # response_voltage = str(sign_text[sign]) 
             ser.write(str(response_voltage).encode())
         
