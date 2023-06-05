@@ -109,8 +109,10 @@ while True:
             
             df['A Current'] = df['A Current'].str.replace(' mA', '').astype(float)
             if len(df) >= 30:
+                print('length check pass')
                 current_now = df['A Current'].tail(30).mean()
             else: 
+                print('length check fail')
                 current_now = 0
 
             response_voltage = control.SetPump(current_now, latest_gradient)
