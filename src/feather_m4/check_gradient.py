@@ -131,6 +131,7 @@ while True:
 
     # Calculate the gradient
     df_resampled['gradient'] = np.gradient(df_resampled['A Current'], df_resampled['time'])
+    print(df_resampled)
 
     gradient_df = df_resampled['gradient']
 
