@@ -100,3 +100,5 @@ for i,row in df_auto_control.iterrows():
 
 
 cnx.close()
+
+os.remove('/home/wase/autonomous_reactor/src/feather_m4/adalogger_data.csv')

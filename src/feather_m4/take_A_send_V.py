@@ -55,26 +55,8 @@ while True:
             
         
         data_dict['datetime'] = str(datetime.now())
-
-        
-            
-
-        # print(data_dict)
-        
-
-        
-
-
-        
-       
-
-
-
-        
-
-    
-
         data_log_time_check = 0.1
+        feedrate_time_check = 3
         if time_checker1.has_passed_minutes(data_log_time_check):
             time_checker1.reset()
 
@@ -109,7 +91,7 @@ while True:
             
             df['A Current'] = df['A Current'].str.replace(' mA', '').astype(float)
             if len(df) >= 30:
-                print('length check pass')
+              
                 current_now = df['A Current'].tail(30).mean()
             else: 
                 print('length check fail')
@@ -118,46 +100,17 @@ while True:
             response_voltage = control.SetPump(current_now, latest_gradient)
             # response_voltage = str(sign_text[sign]) 
             ser.write(str(response_voltage).encode())
-            print('feedrate voltage', str( response_voltage))
+            print('feedrate voltage', str(response_voltage))
         
 
-
-        # gradient_time_check = 10
-        # if time_checker2.has_passed_minutes(gradient_time_check):
-        #     time_checker2.reset()
-
-        #     try:
-        #         df_live = pd.read_csv('adalogger_data.csv')
-        #         print(df_live.tail(10))
-        #         trend_calculator = TrendGradientCalculator(df_live)
         
-        #     except FileNotFoundError:
-        #         pass
+            if time_checker2.has_passed_minutes(data_log_time_check):
+                time_checker2.reset()
+                # Construct a DataFrame with the data
+                data_to_append = pd.DataFrame({'datetime': [pd.to_datetime('now')], 'feedrate voltage': [response_voltage]})
 
-         
-                
-     
-            # try:
-            #     gradient = trend_calculator.calculate_gradient()
-            #     gradient_dict['datetime'] = str(datetime.now())
-            #     gradient_dict['gradient_caluclated'] = gradient
-
-            #     df = pd.DataFrame(gradient_dict, index=[gradient_dict['datetime']])
-            #     df = df.drop('datetime', axis=1)
-            #     df = df.rename_axis('datetime') 
-
-            #     if not os.path.isfile(csv_file2) or os.stat(csv_file2).st_size == 0:
-            #         df.to_csv(csv_file2, mode='w', header=True)
-            #     else:
-            #         df.to_csv(csv_file2, mode='a', header=False)
-        
-
-            #     print("Gradient of A Current over the last minute:", gradient)
-            # except ValueError:
-            #     pass
-            # except np.linalg.LinAlgError:
-            #     pass
-
+                    # Append the data to the CSV file
+                data_to_append.to_csv('feedrate_data.csv', mode='a', header=False, index=False)
 
 
 
