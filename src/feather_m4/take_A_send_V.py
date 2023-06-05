@@ -36,8 +36,8 @@ csv_file = 'adalogger_data.csv'
 control = Control()
 data_dict = {}
 gradient_dict = {}
-time_checker1 = time_check()
-time_checker2 = time_check()
+time_checker1 = TimeCheck()
+time_checker2 = TimeCheck()
 latest_gradient = 0 
 while True:
     if ser.in_waiting > 0:
