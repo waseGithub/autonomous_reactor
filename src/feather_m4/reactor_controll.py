@@ -83,7 +83,7 @@ class Control:
     def __init__(self):
         self.feedrate = 0.0
 
-    def set_pump(self, current_now: float, latest_gradient: float) -> float:
+    def SetPump(self, current_now: float, latest_gradient: float) -> float:
         """
         This method calculates and sets the new feedrate based on the current and the latest gradient.
         
