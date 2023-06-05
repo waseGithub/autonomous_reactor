@@ -4,7 +4,7 @@ from datetime import datetime
 import os 
 # from reactor_controll import TrendGradientCalculator
 from reactor_controll import TimeCheck
-from reactor_controll import SetPump
+from reactor_controll import Control
 import numpy as np
 import json
 import math
@@ -31,7 +31,9 @@ ser = serial.Serial(port, board_baud_rate)
 csv_file = 'adalogger_data.csv'
 
 
+
 # Read data from Arduino
+control = Control()
 data_dict = {}
 gradient_dict = {}
 time_checker1 = time_check()
@@ -111,7 +113,7 @@ while True:
             else: 
                 current_now = 0
 
-            response_voltage = SetPump(current_now, latest_gradient)
+            response_voltage = control.SetPump(current_now, latest_gradient)
             # response_voltage = str(sign_text[sign]) 
             ser.write(str(response_voltage).encode())
         
