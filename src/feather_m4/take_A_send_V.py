@@ -105,7 +105,7 @@ while True:
                 # Extract the data value
             
 
-            df = pd.read_csv('adalogger.csv')
+            df = pd.read_csv(csv_file)
             
             df['A Current'] = df['A Current'].str.replace(' mA', '').astype(float)
             if len(df) >= 30:
