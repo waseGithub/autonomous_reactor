@@ -110,9 +110,9 @@ class Control:
             if sign_text[sign] == 1 or sign_text[sign] == 0:
                 self.feedrate += feedrate_step
             else :
-                self.feedrate = 0.001
+                self.feedrate = 0.0015
         else :
-            self.feedrate = 0.001
+            self.feedrate = 0.0015
         
         return self.feedrate
 
