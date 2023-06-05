@@ -72,7 +72,7 @@ df_auto_control = df_auto_control.dropna(subset=['A Bus Voltage', 'A Current'])
 
 
 
-
+print(df_auto_control)
 
 df_auto_control = resample_mean(df_auto_control, '30T', ['A Bus Voltage','A Current', 'Set Voltage','digital intput'], 3)
 
