@@ -116,6 +116,7 @@ while True:
             response_voltage = control.SetPump(current_now, latest_gradient)
             # response_voltage = str(sign_text[sign]) 
             ser.write(str(response_voltage).encode())
+            print('feedrate voltage', str( response_voltage))
         
 
 
