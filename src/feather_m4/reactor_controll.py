@@ -94,6 +94,8 @@ class Control:
         Returns:
         float: The updated feedrate.
         """
+        print('current now', current_now)
+        print('latest gradient', latest_gradient)
         sign = int(math.copysign(1, latest_gradient))
         sign_text = {
                         1: 1,
