@@ -81,9 +81,9 @@ class TimeCheck:
 
 class Control:
     def __init__(self):
-        self.feedrate = 5
+        self.feedrate = 0.1
         self.startup = True
-        self.feedrate_min = 5
+        self.feedrate_min = 0.1
         self.feedrate_max = 0.4
 
     def SetPump(self, current_now: float, latest_gradient: float) -> float:
