@@ -97,15 +97,16 @@ while True:
                 print('length check fail')
                 current_now = 0
 
-            response_voltage = control.SetPump(current_now, latest_gradient)
-            # response_voltage = str(sign_text[sign]) 
-            ser.write(str(response_voltage).encode())
-            print('feedrate voltage', str(response_voltage))
-        
+            
 
         
             if time_checker2.has_passed_minutes(feedrate_time_check):
                 time_checker2.reset()
+                response_voltage = control.SetPump(current_now, latest_gradient)
+                # response_voltage = str(sign_text[sign]) 
+                ser.write(str(response_voltage).encode())
+                print('feedrate voltage', str(response_voltage))
+        
                 # Construct a DataFrame with the data
                 data_to_append = pd.DataFrame({'datetime': [pd.to_datetime('now')], 'feedrate voltage': [response_voltage]})
 
