@@ -104,7 +104,7 @@ class Control:
         feedrate_step = 0.00005
 
         sign = int(math.copysign(1, latest_gradient))
-        print('sign is', type(sign))
+        print('sign is', sign)
 
 
 
@@ -119,10 +119,10 @@ class Control:
                 self.feedrate += feedrate_step
                 print('System healthy increasing feed')
 
-            elif self.feedrate >= self.feedrate_min:
+            elif (sign == -1) and self.feedrate >= self.feedrate_min:
                 self.feedrate -= feedrate_step
                 print('System overfed reducing feed')
-            else:
+            elif (sign == -1) and self.feedrate <= self.feedrate_min:
                 self.feedrate += feedrate_step
                 print('System starved increasing feed')
         print('Feedrate is', self.feedrate)
