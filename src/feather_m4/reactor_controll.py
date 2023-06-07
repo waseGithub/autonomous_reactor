@@ -81,7 +81,10 @@ class TimeCheck:
 
 class Control:
     def __init__(self):
-        self.feedrate = 0.003
+        self.feedrate = 0.1
+        self.startup = True
+        self.feedrate_min = 0.1
+        self.feedrate_max = 0.4
 
     def SetPump(self, current_now: float, latest_gradient: float) -> float:
         """
@@ -96,24 +99,28 @@ class Control:
         """
         print('current now', current_now)
         print('latest gradient', latest_gradient)
-        sign = int(math.copysign(1, latest_gradient))
-        sign_text = {
-                        1: 1,
-                        -1: -1,
-                        0: 0
-                    }
-        
-        feedrate_step = 0.001
+
         current_min = 25.00
+        feedrate_step = 0.001
 
-        if current_now > current_min: 
-            if sign_text[sign] == 1 or sign_text[sign] == 0:
+        sign = int(math.copysign(1, latest_gradient))
+
+        if self.startup:
+            print('System in start up phase')
+            self.feedrate = self.feedrate_min
+            if current_now > current_min:
                 self.feedrate += feedrate_step
-            else :
-                self.feedrate = 0.003
-        else :
-            self.feedrate = 0.003
-        
-        return self.feedrate
+                self.startup = False
+        else:
+            if (sign == 1 or sign == 0) and self.feedrate < self.feedrate_max:
+                self.feedrate += feedrate_step
+                print('System healthy increasing feed')
 
-    
+            elif self.feedrate > self.feedrate_min:
+                self.feedrate -= feedrate_step
+                print('System overfed reducing feed')
+            else:
+                self.feedrate += feedrate_step
+                print('System starved increasing feed')
+  
+        return self.feedrate
