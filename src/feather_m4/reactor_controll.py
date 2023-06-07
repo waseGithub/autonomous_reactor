@@ -83,7 +83,7 @@ class Control:
     def __init__(self):
         self.feedrate = 1
         self.startup = True
-        self.feedrate_min = 0.1
+        self.feedrate_min = 1
         self.feedrate_max = 0.4
 
     def SetPump(self, current_now: float, latest_gradient: float) -> float:
@@ -122,5 +122,5 @@ class Control:
             else:
                 self.feedrate += feedrate_step
                 print('System starved increasing feed')
-  
+        print('Feedrate is', self.feedrate)
         return self.feedrate
