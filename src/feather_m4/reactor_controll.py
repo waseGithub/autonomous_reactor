@@ -81,7 +81,7 @@ class TimeCheck:
 
 class Control:
     def __init__(self):
-        self.feedrate = 0.1
+        self.feedrate = 1
         self.startup = True
         self.feedrate_min = 0.1
         self.feedrate_max = 0.4
@@ -101,7 +101,7 @@ class Control:
         print('latest gradient', latest_gradient)
 
         current_min = 25.00
-        feedrate_step = 0.001
+        feedrate_step = 0.00005
 
         sign = int(math.copysign(1, latest_gradient))
 
