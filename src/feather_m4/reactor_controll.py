@@ -104,6 +104,9 @@ class Control:
         feedrate_step = 0.00005
 
         sign = int(math.copysign(1, latest_gradient))
+        print('sign is', sign)
+
+
 
         if self.startup:
             print('System in start up phase')
