@@ -84,12 +84,16 @@ class Control:
     def __init__(self):
         self.feedrate = 0.1
         self.startup = True
-        self.feedrate_min = 0.25
+        self.feedrate_min = 0.18
         self.feedrate_max = 0.4
         self.feedrate_file = 'feedrate.json'
 
         # check if the feedrate json file exists
         if os.path.exists(self.feedrate_file):
+            with open(self.feedrate_file, 'r') as f:
+                data = json.load(f)
+                if 'feedrate' in data:
+                    self.feedrate = data['feedrate']
             self.startup = False
 
 
