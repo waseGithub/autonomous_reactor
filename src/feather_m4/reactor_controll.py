@@ -83,7 +83,7 @@ class Control:
     def __init__(self):
         self.feedrate = 0.1
         self.startup = True
-        self.feedrate_min = 0.1
+        self.feedrate_min = 0.25
         self.feedrate_max = 0.4
 
     def SetPump(self, current_now: float, latest_gradient: float) -> float:
@@ -101,7 +101,7 @@ class Control:
         print('latest gradient', latest_gradient)
 
         current_min = 25.00
-        feedrate_step = 0.00005
+        feedrate_step = 0.0001
 
         sign = int(math.copysign(1, latest_gradient))
         print('sign is', sign)
@@ -110,7 +110,7 @@ class Control:
 
         if self.startup:
             print('System in start up phase')
-            self.feedrate = self.feedrate_min
+            # self.feedrate = self.feedrate_min
             if current_now > current_min:
                 self.feedrate += feedrate_step
                 self.startup = False
