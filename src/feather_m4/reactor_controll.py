@@ -3,7 +3,8 @@ import datetime as dt
 import numpy as np
 import time
 import math
-
+import json
+import os
 
 
 
@@ -85,6 +86,12 @@ class Control:
         self.startup = True
         self.feedrate_min = 0.25
         self.feedrate_max = 0.4
+        self.feedrate_file = 'feedrate.json'
+
+        # check if the feedrate json file exists
+        if os.path.exists(self.feedrate_file):
+            self.startup = False
+
 
     def SetPump(self, current_now: float, latest_gradient: float) -> float:
         """
@@ -111,6 +118,10 @@ class Control:
         if self.startup:
             print('System in start up phase')
             # self.feedrate = self.feedrate_min
+
+            
+
+
             if current_now > current_min:
                 self.feedrate += feedrate_step
                 self.startup = False
@@ -126,4 +137,9 @@ class Control:
                 self.feedrate += feedrate_step
                 print('System starved increasing feed')
         print('Feedrate is', self.feedrate)
+
+        with open(self.feedrate_file, 'w') as f:
+            json.dump({'feedrate': self.feedrate}, f)
+
+
         return self.feedrate
