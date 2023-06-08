@@ -143,14 +143,14 @@ while True:
     with open('gradient_data.json', 'w') as file:
         json.dump(gradient_data, file)
 
-     # Plot the result
-    plt.figure(figsize=(10, 6))
-    plt.plot(df_resampled.index, df_resampled['gradient'])
-    plt.xlabel('Date and Time')
-    plt.ylabel('Gradient')
-    plt.title('Gradient of Model')
-    plt.grid(True)
-    plt.pause(0.1)  # Pause for a small delay
+    #  # Plot the result
+    # plt.figure(figsize=(10, 6))
+    # plt.plot(df_resampled.index, df_resampled['gradient'])
+    # plt.xlabel('Date and Time')
+    # plt.ylabel('Gradient')
+    # plt.title('Gradient of Model')
+    # plt.grid(True)
+    # plt.pause(0.1)  # Pause for a small delay
 
     
 
