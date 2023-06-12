@@ -48,11 +48,14 @@ while True:
             line = line.strip()
       
             if line:
-                key, value = line.split(':', 1)
-                key = key.strip()
-                value = value.strip()
-                data_dict[key] = value
-            
+                try:
+                    key, value = line.split(':', 1)
+                    key = key.strip()
+                    value = value.strip()
+                    data_dict[key] = value
+                except ValueError:
+                    pass
+                
         
         data_dict['datetime'] = str(datetime.now())
         data_log_time_check = 0.1
