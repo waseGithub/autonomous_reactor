@@ -15,7 +15,7 @@ import pandas as pd
 
 
 
-colnames = ['datetime','feedrate']
+colnames = ['datetime','pump_voltage_V']
 # data = pd.read_csv ('/home/harvey/Documents/PlatformIO/Projects/autonomous reactor feed/data.csv',  names=colnames, skiprows=  1)
 
 data = pd.read_csv ('/home/wase/autonomous_reactor/src/feather_m4/feedrate_data.csv', names=colnames, skiprows=  1)
@@ -59,25 +59,22 @@ def resample_max(df, time, cols, round_val):
 
 
 df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
-df.set_index('datetime', inplace=True)
+
 
 # df['A Bus Voltage'] = df['A Bus Voltage'].str.replace(' V', '')
 # df['A Current'] = df['A Current'].str.replace(' mA', '')
 
 
 
+df['feedrate_ml_H'] = (df['pump_volatge_V'] * 1.0726) * 0.021
 
 
 
-
-
-
-df.reset_index(inplace=True)
 df['datetime'] = df['datetime'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
 print(df.tail())
 
-
+df.to_csv('flowrate_inferred.csv')
 
 cnx = mysql.connector.connect(user='root', password='wase2022', host='34.89.81.147', database='autonomous_reactor')
 
