@@ -66,7 +66,7 @@ df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
 
 
 
-df['feedrate_ml_H'] = (df['pump_volatge_V'] * 1.0726) - 0.021
+df['feedrate_ml_H'] = (df['pump_voltage_V'] * 1.0726) - 0.021
 
 
 
