@@ -75,6 +75,8 @@ df.set_index('datetime', inplace=True)
 df.reset_index(inplace=True)
 df['datetime'] = df['datetime'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
+print(df.tail())
+
 
 
 cnx = mysql.connector.connect(user='root', password='wase2022', host='34.89.81.147', database='autonomous_reactor')
