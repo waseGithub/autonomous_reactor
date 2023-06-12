@@ -118,6 +118,7 @@ while True:
 
 
                 if not os.path.isfile('feedrate_data.csv') or os.stat('feedrate_data.csv').st_size == 0:
+                    print('making new csv for feedrate')
                     data_to_append.to_csv('feedrate_data.csv', mode='w', header=False)
                 else:
                     data_to_append.to_csv('feedrate_data.csv', mode='a', header=False)
