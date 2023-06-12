@@ -61,8 +61,8 @@ def resample_max(df, time, cols, round_val):
 df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
 df.set_index('datetime', inplace=True)
 
-df['A Bus Voltage'] = df['A Bus Voltage'].str.replace(' V', '')
-df['A Current'] = df['A Current'].str.replace(' mA', '')
+# df['A Bus Voltage'] = df['A Bus Voltage'].str.replace(' V', '')
+# df['A Current'] = df['A Current'].str.replace(' mA', '')
 
 
 
