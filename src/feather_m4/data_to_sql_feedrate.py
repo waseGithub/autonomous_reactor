@@ -76,22 +76,22 @@ print(df.tail())
 
 df.to_csv('flowrate_inferred.csv')
 
-cnx = mysql.connector.connect(user='root', password='wase2022', host='34.89.81.147', database='autonomous_reactor')
+# cnx = mysql.connector.connect(user='root', password='wase2022', host='34.89.81.147', database='autonomous_reactor')
 
 
  
 
-cursor = cnx.cursor()
-cols = "`,`".join([str(i) for i in df.columns.tolist()])
-for i,row in df.iterrows():
-    try:
-      sql = "INSERT INTO `feedrate` (`" +cols + "`) VALUES (" + "%s,"*(len(row)-1) + "%s)"
-      cursor.execute(sql, tuple(row))
-      cnx.commit()
-    except mysql.connector.errors.ProgrammingError:
-      pass
+# cursor = cnx.cursor()
+# cols = "`,`".join([str(i) for i in df.columns.tolist()])
+# for i,row in df.iterrows():
+#     try:
+#       sql = "INSERT INTO `feedrate` (`" +cols + "`) VALUES (" + "%s,"*(len(row)-1) + "%s)"
+#       cursor.execute(sql, tuple(row))
+#       cnx.commit()
+#     except mysql.connector.errors.ProgrammingError:
+#       pass
 
 
-cnx.close()
+# cnx.close()
 
 
