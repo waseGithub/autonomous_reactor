@@ -84,7 +84,7 @@ class Control:
     def __init__(self):
         self.feedrate = 0.1
         self.startup = True
-        self.feedrate_min = 0.18
+        self.feedrate_min = 0.14
         self.feedrate_max = 0.4
         self.feedrate_file = 'feedrate.json'
 
