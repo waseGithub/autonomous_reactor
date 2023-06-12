@@ -55,7 +55,7 @@ def resample_max(df, time, cols, round_val):
 
 
 
-
+print(df.tail())
 
 
 df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
@@ -72,7 +72,7 @@ df['feedrate_ml_D'] = ((df['pump_voltage_V'] * 1.0726) - 0.021)*1440
 
 df['datetime'] = df['datetime'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
-print(df.tail())
+
 
 # df.to_csv('flowrate_inferred.csv')
 
