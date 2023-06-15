@@ -80,14 +80,90 @@ class TimeCheck:
         self.last_event_time = time.time()
 
 
+# class Control:
+#     def __init__(self):
+#         self.feedrate = 0.1
+#         self.startup = True
+#         self.feedrate_min = 0.14
+#         self.feedrate_max = 0.4
+#         self.feedrate_file = 'feedrate.json'
+
+#         # check if the feedrate json file exists
+#         if os.path.exists(self.feedrate_file):
+#             with open(self.feedrate_file, 'r') as f:
+#                 data = json.load(f)
+#                 if 'feedrate' in data:
+#                     self.feedrate = data['feedrate']
+#             self.startup = False
+
+
+    # def SetPump(self, current_now: float, latest_gradient: float) -> float:
+    #     """
+    #     This method calculates and sets the new feedrate based on the current and the latest gradient.
+        
+    #     Parameters:
+    #     current_now (float): The current value.
+    #     latest_gradient (float): The latest gradient value.
+
+    #     Returns:
+    #     float: The updated feedrate.
+    #     """
+    #     print('current now', current_now)
+    #     print('latest gradient', latest_gradient)
+
+    #     current_min = 25.00
+    #     feedrate_step = 0.0001
+
+    #     sign = int(math.copysign(1, latest_gradient))
+    #     print('sign is', sign)
+
+
+
+    #     if self.startup:
+    #         print('System in start up phase')
+    #         # self.feedrate = self.feedrate_min
+
+            
+
+
+    #         if current_now > current_min:
+    #             self.feedrate += feedrate_step
+    #             self.startup = False
+    #     else:
+    #         if (sign == 1 or sign == 0) and self.feedrate < self.feedrate_max:
+    #             self.feedrate += feedrate_step
+    #             print('System healthy increasing feed')
+
+    #         elif (sign == -1) and self.feedrate >= self.feedrate_min:
+    #             self.feedrate -= feedrate_step
+    #             print('System overfed reducing feed')
+    #         elif (sign == -1) and self.feedrate <= self.feedrate_min:
+    #             self.feedrate += feedrate_step
+    #             print('System starved increasing feed')
+    #     print('Feedrate is', self.feedrate)
+
+    #     with open(self.feedrate_file, 'w') as f:
+    #         json.dump({'feedrate': self.feedrate}, f)
+
+
+    #     return self.feedrate
+
+
+
+class State(Enum):
+    STARTUP = 1
+    HEALTHY = 2
+    OVERFED = 3
+    STARVED = 4
+
 class Control:
     def __init__(self):
-        self.feedrate = 0.1
-        self.startup = True
-        self.feedrate_min = 0.14
+        self.state = State.STARTUP
+        self.feedrate_min = 1.3
         self.feedrate_max = 0.4
+        self.feedrate = 0.1
+        self.gradient_limit = -1.5
         self.feedrate_file = 'feedrate.json'
-
         # check if the feedrate json file exists
         if os.path.exists(self.feedrate_file):
             with open(self.feedrate_file, 'r') as f:
@@ -95,6 +171,8 @@ class Control:
                 if 'feedrate' in data:
                     self.feedrate = data['feedrate']
             self.startup = False
+
+
 
 
     def SetPump(self, current_now: float, latest_gradient: float) -> float:
@@ -112,38 +190,58 @@ class Control:
         print('latest gradient', latest_gradient)
 
         current_min = 25.00
+     
         feedrate_step = 0.0001
 
         sign = int(math.copysign(1, latest_gradient))
         print('sign is', sign)
 
+        if self.state == State.STARTUP:
+            # system has been running by previous manual operation / batch
+            # current should be stable but low 
 
-
-        if self.startup:
             print('System in start up phase')
-            # self.feedrate = self.feedrate_min
-
-            
-
-
             if current_now > current_min:
                 self.feedrate += feedrate_step
-                self.startup = False
-        else:
-            if (sign == 1 or sign == 0) and self.feedrate < self.feedrate_max:
-                self.feedrate += feedrate_step
-                print('System healthy increasing feed')
+                self.state = State.HEALTHY
 
-            elif (sign == -1) and self.feedrate >= self.feedrate_min:
-                self.feedrate -= feedrate_step
-                print('System overfed reducing feed')
-            elif (sign == -1) and self.feedrate <= self.feedrate_min:
+
+        elif self.state == State.HEALTHY:
+            if latest_gradient > self.gradient_limit and self.feedrate < self.feedrate_max:
+            # The current monitred in the system has not shown a gradient drop above the set limit
+            # the maximum feedrate has not been reached we infer the system is health and feeding should continue to be incresed 
                 self.feedrate += feedrate_step
-                print('System starved increasing feed')
+                print('State: Healthy')
+                print('Increasing feedrate')
+            elif(sign == -1):
+                print('State: Overfed')
+                print('Sginificant reduction in current has been detected, indicating the system to be overfed, feedrate will now reduce')
+                self.state = State.OVERFED
+
+
+        elif self.state == State.OVERFED:
+            if self.feedrate >= self.feedrate_min and latest_gradient < self.gradient_limit:
+                self.feedrate -= feedrate_step
+                print('State: Overfed')
+                print('System will reduce feedrate at high rate to recover')
+            elif(sign == 1):
+                print('State: Healthy')
+                print('System has responded to feedrate reduction and will start to increase feeding again')
+                self.state = State.Healthy
+            else:
+                self.state = State.STARVED
+
+
+        elif self.state == State.STARVED:
+            if self.feedrate <= self.feedrate_min:
+                self.feedrate += 0.5
+                print('State: Healthy')
+                print('Feedrate instanuously stepped up to ovecome the effects of underfeeding')
+                self.state = State.HEALTHY
+
         print('Feedrate is', self.feedrate)
 
         with open(self.feedrate_file, 'w') as f:
             json.dump({'feedrate': self.feedrate}, f)
-
 
         return self.feedrate
