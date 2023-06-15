@@ -221,7 +221,7 @@ class Control:
 
         elif self.state == State.OVERFED:
             if self.feedrate >= self.feedrate_min and latest_gradient < self.gradient_limit:
-                self.feedrate -= feedrate_step
+                self.feedrate -= (feedrate_step*10)
                 print('State: Overfed')
                 print('System will reduce feedrate at high rate to recover')
             elif(sign == 1):
