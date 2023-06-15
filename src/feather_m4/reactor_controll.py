@@ -162,7 +162,7 @@ class Control:
         self.feedrate_min = 0.13
         self.feedrate_max = 0.4
         self.feedrate = 0.1
-        self.gradient_limit = -1.5
+        self.gradient_limit = -1
         self.feedrate_file = 'feedrate.json'
         # check if the feedrate json file exists
         if os.path.exists(self.feedrate_file):
@@ -234,7 +234,7 @@ class Control:
 
         elif self.state == State.STARVED:
             if self.feedrate <= self.feedrate_min:
-                self.feedrate += 0.05
+                self.feedrate += 0.005
                 print('State: Healthy')
                 print('Feedrate instanuously stepped up to ovecome the effects of underfeeding')
                 self.state = State.HEALTHY
