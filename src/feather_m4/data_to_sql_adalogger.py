@@ -18,7 +18,7 @@ import pandas as pd
 colnames = ['datetime','A Bus Voltage','A Current', 'Set Voltage','digital intput']
 # data = pd.read_csv ('/home/harvey/Documents/PlatformIO/Projects/autonomous reactor feed/data.csv',  names=colnames, skiprows=  1)
 
-data = pd.read_csv ('/home/wase/autonomous_reactor/src/feather_m4/adalogger_data.csv', names=colnames, skiprows=  1)
+data = pd.read_csv('/home/wase/autonomous_reactor/src/feather_m4/adalogger_data.csv', names=colnames, skiprows=  1)
 #data = pd.read_csv (r'/home/farscopestudent/Documents/WASE/wase-cabinet/flowmeter_push.csv')  
 df_auto_control = pd.DataFrame(data)
 
@@ -111,3 +111,4 @@ for i,row in df_auto_control.iterrows():
 cnx.close()
 
 
+os.remove('/home/wase/autonomous_reactor/src/feather_m4/adalogger_data.csv')
