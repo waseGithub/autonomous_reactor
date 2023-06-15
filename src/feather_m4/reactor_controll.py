@@ -5,7 +5,7 @@ import time
 import math
 import json
 import os
-
+from enum import Enum
 
 
 # class TrendGradientCalculator:
