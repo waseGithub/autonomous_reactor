@@ -227,7 +227,7 @@ class Control:
             elif(sign == 1):
                 print('State: Healthy')
                 print('System has responded to feedrate reduction and will start to increase feeding again')
-                self.state = State.Healthy
+                self.state = State.HEALTHY
             else:
                 self.state = State.STARVED
 
