@@ -30,7 +30,7 @@ df = pd.DataFrame(data)
 
 
 def resample_mean(df, time, cols, round_val):
-  print(df)
+  print(df.tail())
   df.dropna(inplace=True)
   # df =  df[(df.astype(float) >= 0.0).all(1)]
   df = df.groupby([pd.Grouper(freq=time, level='datetime')])[cols].mean() 
@@ -56,7 +56,7 @@ def resample_max(df, time, cols, round_val):
 
 
 
-print(df.tail())
+
 
 
 df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
@@ -76,7 +76,7 @@ df['datetime'] = df['datetime'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
 
 df.set_index('datetime', inplace=True)
-df = resample_mean(df, '2T',['pump_voltage_V'], 3)
+df = resample_mean(df, '2T',['pump_voltage_V', 'feedrate_ml_D'], 3)
 df.reset_index(inplace=True)
 
 
