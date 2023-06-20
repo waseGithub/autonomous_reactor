@@ -29,13 +29,13 @@ df = pd.DataFrame(data)
 
 
 
-def resample_mean(df, time, cols, round_val):
-  print(df.tail())
-  df.dropna(inplace=True)
+def resample_mean(dfm, time, cols, round_val):
+  print(dfm.tail())
+  dfm.dropna(inplace=True)
   # df =  df[(df.astype(float) >= 0.0).all(1)]
-  df = df.groupby([pd.Grouper(freq=time, level='datetime')])[cols].mean() 
-  df = df.round(round_val)
-  return df
+  dfm = dfm.groupby([pd.Grouper(freq=time, level='datetime')])[cols].mean() 
+  dfm = dfm.round(round_val)
+  return dfm
 
 def resample_sum(df, time, cols, round_val):
   df.dropna(inplace=True)
@@ -75,9 +75,9 @@ df['datetime'] = df['datetime'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
 
 
-# df.set_index('datetime', inplace=True)
+df.set_index('datetime', inplace=True)
 df = resample_mean(df, '2T',['pump_voltage_V', 'feedrate_ml_D'], 3)
-# df.reset_index(inplace=True)
+df.reset_index(inplace=True)
 
 
 
