@@ -75,9 +75,9 @@ df['datetime'] = df['datetime'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
 
 
-df.set_index('datetime', inplace=True)
+# df.set_index('datetime', inplace=True)
 df = resample_mean(df, '2T',['pump_voltage_V', 'feedrate_ml_D'], 3)
-df.reset_index(inplace=True)
+# df.reset_index(inplace=True)
 
 
 
