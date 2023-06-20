@@ -72,6 +72,12 @@ df['feedrate_ml_D'] = ((df['pump_voltage_V'] * 1.0726) - 0.021)*1440
 
 df['datetime'] = df['datetime'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
+df = resample_mean(df, '2T', 3)
+
+
+
+
+
 
 
 # df.to_csv('flowrate_inferred.csv')
