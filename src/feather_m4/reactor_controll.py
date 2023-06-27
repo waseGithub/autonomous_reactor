@@ -160,9 +160,9 @@ class State(Enum):
 class Control:
     def __init__(self):
         self.state = State.STARTUP
-        self.feedrate_min = 0.13
+        self.feedrate_min = 0.1
         self.feedrate_max = 0.4
-        self.feedrate = 0.1
+        self.feedrate = 0.0
         self.gradient_limit = -0.6
         self.feedrate_file = 'feedrate.json'
         self.state_file = 'state.json'
@@ -214,7 +214,8 @@ class Control:
             print('System in start up phase')
             # if current_now > current_min:
             self.feedrate += feedrate_step
-            self.state = State.HEALTHY
+            if current_now > current_min:
+                self.state = State.HEALTHY
 
 
         elif self.state == State.HEALTHY:
