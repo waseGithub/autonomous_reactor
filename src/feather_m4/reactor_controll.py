@@ -254,12 +254,12 @@ class Control:
                 self.state = State.HEALTHY
 
         print('Feedrate is', self.feedrate)
-        print('Last state is', self.state)
+        print('Last state is', str(self.state))
 
         with open(self.feedrate_file, 'w') as f:
             json.dump({'feedrate': self.feedrate}, f)
         
         with open(self.state_file, 'w') as f:
-            json.dump({'state': self.state}, f)
+            json.dump({'state': str(self.state)}, f)
 
         return self.feedrate
