@@ -174,6 +174,7 @@ class Control:
             self.startup = False
         
         if os.path.exists(self.state_file):
+            print('State file exists')
             with open(self.state_file, 'r') as f:
                 data = json.load(f)
                 if 'state' in data:
@@ -253,6 +254,7 @@ class Control:
                 self.state = State.HEALTHY
 
         print('Feedrate is', self.feedrate)
+        print('Last state is', self.state)
 
         with open(self.feedrate_file, 'w') as f:
             json.dump({'feedrate': self.feedrate}, f)
