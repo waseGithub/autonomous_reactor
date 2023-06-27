@@ -162,7 +162,7 @@ class Control:
         self.state = State.STARTUP
         self.feedrate_min = 0.1
         self.feedrate_max = 0.4
-        self.feedrate = 0.0
+        self.feedrate = 0.01
         self.gradient_limit = -0.6
         self.feedrate_file = 'feedrate.json'
         self.state_file = 'state.json'
