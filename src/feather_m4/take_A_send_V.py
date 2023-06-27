@@ -60,7 +60,7 @@ while True:
         
         data_dict['datetime'] = str(datetime.now())
         data_log_time_check = 0.1
-        feedrate_time_check = 3
+        feedrate_time_check = 0.5
         if time_checker1.has_passed_minutes(data_log_time_check):
             time_checker1.reset()
 
