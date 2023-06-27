@@ -164,6 +164,7 @@ class Control:
         self.feedrate = 0.1
         self.gradient_limit = -1
         self.feedrate_file = 'feedrate.json'
+        self.state_file = 'state.json'
         # check if the feedrate json file exists
         if os.path.exists(self.feedrate_file):
             with open(self.feedrate_file, 'r') as f:
