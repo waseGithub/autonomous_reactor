@@ -177,7 +177,7 @@ class Control:
             with open(self.state_file, 'r') as f:
                 data = json.load(f)
                 if 'state' in data:
-                    self.feedrate = data['state']
+                    self.state = data['state']
   
 
 
