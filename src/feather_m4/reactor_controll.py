@@ -171,6 +171,14 @@ class Control:
                 if 'feedrate' in data:
                     self.feedrate = data['feedrate']
             self.startup = False
+        
+        if os.path.exists(self.state_file):
+            with open(self.state_file, 'r') as f:
+                data = json.load(f)
+                if 'state' in data:
+                    self.feedrate = data['state']
+  
+
 
 
 
@@ -213,6 +221,7 @@ class Control:
                 self.feedrate += feedrate_step
                 print('State: Healthy')
                 print('Increasing feedrate')
+                self.state = State.HEALTHY
             elif(sign == -1):
                 print('State: Overfed')
                 print('Sginificant reduction in current has been detected, indicating the system to be overfed, feedrate will now reduce')
@@ -224,11 +233,14 @@ class Control:
                 self.feedrate -= (feedrate_step*10)
                 print('State: Overfed')
                 print('System will reduce feedrate at high rate to recover')
-            elif(sign == 1):
+                self.state = State.OVERFED
+            elif(sign != -1):
                 print('State: Healthy')
-                print('System has responded to feedrate reduction and will start to increase feeding again')
+                print('System has responded to feedrate reduction, system is now switching to HEATHLY state')
                 self.state = State.HEALTHY
             else:
+                print('State: Starved')
+                print('System feedrate is below feedrate minimum, system siwtching to STARVED state')
                 self.state = State.STARVED
 
 
@@ -236,12 +248,15 @@ class Control:
             if self.feedrate <= self.feedrate_min:
                 self.feedrate += 0.005
                 print('State: Healthy')
-                print('Feedrate instanuously stepped up to ovecome the effects of underfeeding')
+                print('Feedrate instanuously stepped up to ovecome the effects of underfeeding, switchng to HEALTHY state')
                 self.state = State.HEALTHY
 
         print('Feedrate is', self.feedrate)
 
         with open(self.feedrate_file, 'w') as f:
             json.dump({'feedrate': self.feedrate}, f)
+        
+        with open(self.state_file, 'w') as f:
+            json.dump({'state': self.state}, f)
 
         return self.feedrate
