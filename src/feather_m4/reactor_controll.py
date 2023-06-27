@@ -155,6 +155,7 @@ class State(Enum):
     HEALTHY = 2
     OVERFED = 3
     STARVED = 4
+    BIOMAS_WASHOUT = 5
 
 class Control:
     def __init__(self):
@@ -162,7 +163,7 @@ class Control:
         self.feedrate_min = 0.13
         self.feedrate_max = 0.4
         self.feedrate = 0.1
-        self.gradient_limit = -1
+        self.gradient_limit = -0.6
         self.feedrate_file = 'feedrate.json'
         self.state_file = 'state.json'
         # check if the feedrate json file exists
@@ -224,7 +225,7 @@ class Control:
                 print('State: Healthy')
                 print('Increasing feedrate')
                 self.state = State.HEALTHY
-            elif(sign == -1):
+            else:
                 print('State: Overfed')
                 print('Sginificant reduction in current has been detected, indicating the system to be overfed, feedrate will now reduce')
                 self.state = State.OVERFED
@@ -232,18 +233,30 @@ class Control:
 
         elif self.state == State.OVERFED:
             if self.feedrate >= self.feedrate_min and latest_gradient < self.gradient_limit:
-                self.feedrate -= (feedrate_step*10)
+                self.feedrate -= (feedrate_step*5)
                 print('State: Overfed')
                 print('System will reduce feedrate at high rate to recover')
                 self.state = State.OVERFED
-            elif(sign != -1):
-                print('State: Healthy')
-                print('System has responded to feedrate reduction, system is now switching to HEATHLY state')
-                self.state = State.HEALTHY
-            else:
+
+            elif self.feedrate < self.feedrate_min :
                 print('State: Starved')
                 print('System feedrate is below feedrate minimum, system siwtching to STARVED state')
                 self.state = State.STARVED
+
+            elif(sign != -1):
+                print('State: Healthy')
+                print('System has responded to feedrate reduction, system is now switching to HEATHLY state')
+                self.state = State.HEALTHY 
+
+
+        elif self.state == State.STARVED:
+            if self.feedrate <= self.feedrate_min:
+                self.feedrate += 0.005
+                print('State: Healthy')
+                print('Feedrate instanuously stepped up to ovecome the effects of underfeeding, switchng to HEALTHY state')
+                self.state = State.HEALTHY                
+                   
+            
 
 
         elif self.state == State.STARVED:
