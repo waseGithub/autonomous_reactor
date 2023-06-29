@@ -213,7 +213,7 @@ class Control:
 
             print('System in start up phase')
             # if current_now > current_min:
-            self.feedrate += feedrate_step
+            # self.feedrate += feedrate_step
             if current_now > current_min:
                 self.state = State.HEALTHY
 
